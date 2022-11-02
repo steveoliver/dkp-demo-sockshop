@@ -1,6 +1,6 @@
 # GitOps DKP SockShop demo
 
-This tutorial is based on Waveworks Microservice Demo <https://microservices-demo.github.io/>.
+This tutorial is based on Weaveworks Microservice Demo <https://microservices-demo.github.io/>.
 
 ## Prerequirements
 
