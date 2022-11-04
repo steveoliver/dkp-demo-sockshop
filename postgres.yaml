@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: postgres
+  template:
+    metadata:
+      labels:
+        name: postgres
+      annotations:
+        prometheus.io/scrape: "false"
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_DB
+          value: forge
+        - name: POSTGRES_USER
+          value: forge
+        - name: POSTGRES_PASSWORD
+          value: forge
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumes:
+        - pg-data:/var/lib/postgresql/data:rw  
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  annotations:
+        prometheus.io/scrape: 'false'
+  labels:
+    name: postgres
+spec:
+  ports:
+  - port: 5432
+    name: postgres
+    targetPort: 5432
+  selector:
+    name: postgres
