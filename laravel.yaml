@@ -45,6 +45,8 @@ spec:
           value: redis
         - name: REDIS_PASSWORD
           value: redis_password
+        - name: REDIS_PORT
+          value: 6379
         - name: DB_HOST
           value: postgres
         - name: DB_DATABASE
