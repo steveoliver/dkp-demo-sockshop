@@ -17,7 +17,7 @@ spec:
       - name: laravel
         image: steveoliver/laravel-roadrunner:v0.0.4
         command: ["rr"]
-        args: ["serve", "-c", ".rr.yaml"]
+        args: ["serve", "-c", ".rr.local.yaml"]
         volumes:
           - /etc/passwd:/etc/passwd:ro
           - /etc/group:/etc/group:ro
