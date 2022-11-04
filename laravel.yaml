@@ -16,8 +16,7 @@ spec:
       containers:
       - name: laravel
         image: steveoliver/laravel-roadrunner:v0.0.4
-        command: ["rr"]
-        args: ["serve", "-c", ".rr.yaml"]
+        command: rr serve -c .rr.yaml
         resources:
           limits:
             cpu: 300m
