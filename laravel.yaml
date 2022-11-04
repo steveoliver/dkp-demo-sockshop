@@ -23,13 +23,13 @@ spec:
           - /etc/group:/etc/group:ro
           - tmp-data:/tmp:rw
           - .:/app:rw
-        resources:
-          limits:
-            cpu: 300m
-            memory: 1000Mi
-          requests:
-            cpu: 100m
-            memory: 300Mi
+#         resources:
+#           limits:
+#             cpu: 300m
+#             memory: 1000Mi
+#           requests:
+#             cpu: 100m
+#             memory: 300Mi
         ports:
         - containerPort: 8080
         env:
