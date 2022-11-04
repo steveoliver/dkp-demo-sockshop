@@ -45,7 +45,7 @@ spec:
           capabilities:
             drop:
               - all
-          readOnlyRootFilesystem: true
+          # readOnlyRootFilesystem: true
         livenessProbe:
           httpGet:
             path: /
