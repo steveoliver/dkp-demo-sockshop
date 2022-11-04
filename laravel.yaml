@@ -35,29 +35,24 @@ spec:
         env:
         - name: HOME
           value: /tmp
-#         - name: RR_RELAY
-#           value: pipes
+        - name: APP_DEBUG
+          value: "true"
+        - name: APP_ENV
+          value: local
         - name: APP_KEY
           value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
-#         securityContext:
-#           runAsNonRoot: true
-#           runAsUser: 10001
-#           capabilities:
-#             drop:
-#               - all
-#           # readOnlyRootFilesystem: true
-#         livenessProbe:
-#           httpGet:
-#             path: /
-#             port: 8080
-#           initialDelaySeconds: 300
-#           periodSeconds: 3
-#         readinessProbe:
-#           httpGet:
-#             path: /
-#             port: 8080
-#           initialDelaySeconds: 30
-#           periodSeconds: 3
+        - name: REDIS_HOST
+          value: redis
+        - name: REDIS_PASSWORD
+          value: redis_password
+        - name: DB_HOST
+          value: postgres
+        - name: DB_DATABASE
+          value: forge
+        - name: DB_USERNAME
+          value: forge
+        - name: DB_PASSWORD
+          value: forge
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
