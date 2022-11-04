@@ -35,6 +35,8 @@ spec:
         env:
         - name: HOME
           value: /tmp
+        - name: RR_RELAY
+          value: pipes
         - name: APP_KEY
           value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
         securityContext:
