@@ -26,7 +26,7 @@ spec:
         command: ["redis-server"]
         args: ["--requirepass", "redis_password"]
         volumes:
-        - redis-data:/data:rw
+          - redis-data:/data:rw
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
