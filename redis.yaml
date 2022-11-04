@@ -23,7 +23,8 @@ spec:
         ports:
         - name: redis
           containerPort: 6379
-        command: redis-server --requirepass redis_password
+        command: ["redis-server"]
+        args: ["--requirepass", "redis_password"]
         volumes:
         - redis-data:/data:rw
       nodeSelector:
