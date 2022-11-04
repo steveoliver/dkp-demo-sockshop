@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: laravel
-        image: learnk8s/laravel-kubernetes-demo
+        image: steveoliver/laravel-roadrunner:v0.0.4
         resources:
           limits:
             cpu: 300m
