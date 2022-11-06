@@ -25,19 +25,19 @@ spec:
           valueFrom:
             secretKeyRef:
               name: laravel-secrets
-              key: POSTGRES_DB
+              key: DB_HOST
               optional: false
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               name: laravel-secrets
-              key: POSTGRES_USER
+              key: DB_USERNAME
               optional: false
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: laravel-secrets
-              key: POSTGRES_PASSWORD
+              key: DB_PASSWORD
               optional: false
         ports:
         - containerPort: 5432
