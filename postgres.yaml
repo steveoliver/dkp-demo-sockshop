@@ -22,14 +22,26 @@ spec:
         image: postgres:15-alpine
         env:
         - name: POSTGRES_DB
-          value: forge
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: POSTGRES_DB
+              optional: false
         - name: POSTGRES_USER
-          value: forge
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: POSTGRES_USER
+              optional: false
         - name: POSTGRES_PASSWORD
-          value: forge
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: POSTGRES_PASSWORD
+              optional: false
         ports:
         - containerPort: 5432
-          name: postgres
+          name: postgresPort
         volumes:
         - pg-data:/var/lib/postgresql/data:rw  
       nodeSelector:
@@ -47,6 +59,6 @@ spec:
   ports:
   - port: 5432
     name: postgres
-    targetPort: 5432
+    targetPort: postgresPort
   selector:
     name: postgres
