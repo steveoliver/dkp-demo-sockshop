@@ -20,13 +20,13 @@ spec:
       containers:
       - name: redis
         image: redis:7-alpine
-        ports:
-        - name: redis
-          containerPort: 6379
         command: ["redis-server"]
         args: ["--requirepass", "redis_password"]
         volumes:
           - redis-data:/data:rw
+        ports:
+        - name: redis-port
+          containerPort: 6379
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -38,8 +38,7 @@ metadata:
     name: redis
 spec:
   ports:
-    # the port that this service should serve on
   - port: 6379
-    targetPort: 6379
+    targetPort: redis-port
   selector:
     name: redis
