@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cron
+  template:
+    metadata:
+      labels:
+        name: cron
+    spec:
+      containers:
+      - name: cron
+        image: steveoliver/laravel-roadrunner:v0.0.7
+        command: ["supercronic"]
+        args: ["/etc/supercronic/laravel"]
+        volumes:
+          - tmp-data:/tmp:rw
+        env:
+        - name: HOME
+          value: /tmp
+        - name: APP_DEBUG
+          value: "true"
+        - name: APP_ENV
+          value: local
+        - name: APP_KEY
+          value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+        - name: LOG_CHANNEL
+          value: stderr
+        - name: QUEUE_CONNECTION
+          value: redis
+        - name: REDIS_HOST
+          value: redis
+        - name: REDIS_PASSWORD
+          value: redis_password
+        - name: REDIS_PORT
+          value: "6379"
+        - name: DB_HOST
+          value: postgres
+        - name: DB_DATABASE
+          value: forge
+        - name: DB_USERNAME
+          value: forge
+        - name: DB_PASSWORD
+          value: forge
+      nodeSelector:
+        beta.kubernetes.io/os: linux
