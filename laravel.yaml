@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: laravel
-        image: steveoliver/laravel-roadrunner:v0.0.6
+        image: steveoliver/laravel-roadrunner:v0.0.7
         command: ["rr"]
         args: ["serve", "-c", ".rr.yaml"]
         volumes:
