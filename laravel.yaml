@@ -41,6 +41,8 @@ spec:
           value: local
         - name: APP_KEY
           value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
+        - name: LOG_CHANNEL
+          value: stderr
         - name: REDIS_HOST
           value: redis
         - name: REDIS_PASSWORD
