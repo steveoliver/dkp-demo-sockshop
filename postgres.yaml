@@ -25,7 +25,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: laravel-secrets
-              key: DB_HOST
+              key: DB_DATABASE
               optional: false
         - name: POSTGRES_USER
           valueFrom:
