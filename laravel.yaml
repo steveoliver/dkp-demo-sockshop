@@ -43,6 +43,8 @@ spec:
           value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
         - name: LOG_CHANNEL
           value: stderr
+        - name: QUEUE_CONNECTION
+          value: redis
         - name: REDIS_HOST
           value: redis
         - name: REDIS_PASSWORD
