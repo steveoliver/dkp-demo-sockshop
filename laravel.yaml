@@ -22,7 +22,7 @@ spec:
           - tmp-data:/tmp:rw
         ports:
         - containerPort: 8080
-          name: larvel-port
+          name: laravel-port
         envFrom:
         - secretRef:
             name: laravel-secrets
