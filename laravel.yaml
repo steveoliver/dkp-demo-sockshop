@@ -17,7 +17,7 @@ spec:
       - name: laravel
         image: steveoliver/laravel-roadrunner:v0.0.8
         command: ["rr"]
-        args: ["serve", "-c", ".rr.yaml"]
+        args: ["serve"]
         volumes:
           - tmp-data:/tmp:rw
         ports:
