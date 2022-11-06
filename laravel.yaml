@@ -19,46 +19,12 @@ spec:
         command: ["rr"]
         args: ["serve", "-c", ".rr.yaml"]
         volumes:
-#         - /etc/passwd:/etc/passwd:ro
-#         - /etc/group:/etc/group:ro
           - tmp-data:/tmp:rw
-#         - .:/app:rw
-#         resources:
-#           limits:
-#             cpu: 300m
-#             memory: 1000Mi
-#           requests:
-#             cpu: 100m
-#             memory: 300Mi
         ports:
         - containerPort: 8080
-        env:
-        - name: HOME
-          value: /tmp
-        - name: APP_DEBUG
-          value: "true"
-        - name: APP_ENV
-          value: local
-        - name: APP_KEY
-          value: base64:cUPmwHx4LXa4Z25HhzFiWCf7TlQmSqnt98pnuiHmzgY=
-        - name: LOG_CHANNEL
-          value: stderr
-        - name: QUEUE_CONNECTION
-          value: redis
-        - name: REDIS_HOST
-          value: redis
-        - name: REDIS_PASSWORD
-          value: redis_password
-        - name: REDIS_PORT
-          value: "6379"
-        - name: DB_HOST
-          value: postgres
-        - name: DB_DATABASE
-          value: forge
-        - name: DB_USERNAME
-          value: forge
-        - name: DB_PASSWORD
-          value: forge
+        envFrom:
+      - secretRef:
+          name: laravel-secrets
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
