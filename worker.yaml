@@ -22,6 +22,6 @@ spec:
           - tmp-data:/tmp:rw
         envFrom:
         - secretRef:
-          name: laravel-secrets
+            name: laravel-secrets
       nodeSelector:
         beta.kubernetes.io/os: linux
