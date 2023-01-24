@@ -18,10 +18,10 @@ spec:
         image: steveoliver/laravel-roadrunner:v0.0.8
         command: ["php"]
         args: ["artisan", "horizon"]
-        volumes:
-          - tmp-data:/tmp:rw
         envFrom:
         - secretRef:
             name: laravel-secrets
+      volumes:
+        - tmp-data:/tmp:rw
       nodeSelector:
         beta.kubernetes.io/os: linux
