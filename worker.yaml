@@ -21,7 +21,11 @@ spec:
         envFrom:
         - secretRef:
             name: laravel-secrets
+        volumeMounts:
+        - name: tmp-data
+          mountPath: /tmp
       volumes:
-        - tmp-data:/tmp:rw
+        - name: tmp-data
+          emptyDir: {}
       nodeSelector:
         beta.kubernetes.io/os: linux
