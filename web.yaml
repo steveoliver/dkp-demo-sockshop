@@ -27,7 +27,7 @@ spec:
       - name: web
         image: steveoliver/laravel-roadrunner:v0.1.0
         command: ["rr"]
-        args: ["serve", "-c", ".rr.yaml"]
+        args: ["serve"]
         volumeMounts:
           - name: app-logs
             mountPath: /app/storage/logs
