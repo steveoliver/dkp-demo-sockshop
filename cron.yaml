@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cron
+  template:
+    metadata:
+      labels:
+        name: cron
+    spec:
+      containers:
+      - name: cron
+        image: steveoliver/laravel-roadrunner:v0.1.0
+        command: ["supercronic"]
+        args: ["/etc/supercronic/laravel"]
+        envFrom:
+        - secretRef:
+            name: laravel-secrets
+      nodeSelector:
+        kubernetes.io/os: linux
