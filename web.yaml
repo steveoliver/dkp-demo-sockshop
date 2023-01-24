@@ -22,14 +22,14 @@ spec:
           emptyDir: {}
       initContainers:
       - name: migrations
-        image: steveoliver/laravel-roadrunner:v0.1.1
+        image: steveoliver/laravel-roadrunner:v0.1.0
         command: ["php", "artisan", "migrate"]
         envFrom:
           - secretRef:
               name: laravel-secrets
       containers:
       - name: web
-        image: steveoliver/laravel-roadrunner:v0.1.1
+        image: steveoliver/laravel-roadrunner:v0.1.0
         command: ["rr"]
         args: ["serve", "-c", ".rr.yaml"]
         volumeMounts:
