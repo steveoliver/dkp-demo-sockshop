@@ -82,3 +82,16 @@ spec:
     targetPort: metrics-port
   selector:
     name: web
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: web-monitor
+  labels:
+    team: backend
+spec:
+  selector:
+    matchLabels:
+      name: web
+  podMetricsEndpoints:
+    - port: metrics-port
