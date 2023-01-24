@@ -42,8 +42,8 @@ spec:
         ports:
         - containerPort: 5432
           name: postgres-port
-        volumes:
-        - pg-data:/var/lib/postgresql/data:rw  
+      volumes:
+      - pg-data:/var/lib/postgresql/data:rw  
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
