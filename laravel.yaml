@@ -13,13 +13,13 @@ spec:
       labels:
         name: laravel
     spec:
+      volumes:
+      - tmp-data:/tmp:rw
       containers:
       - name: laravel
         image: steveoliver/laravel-roadrunner:v0.0.8
         command: ["rr"]
         args: ["serve"]
-        volumes:
-          - tmp-data:/tmp:rw
         ports:
         - containerPort: 8080
           name: laravel-port
