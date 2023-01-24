@@ -18,16 +18,21 @@ spec:
         image: steveoliver/laravel-roadrunner:v0.0.8
         command: ["rr"]
         args: ["serve"]
-        volumes:
-          - tmp-data:/tmp:rw
         ports:
         - containerPort: 8080
           name: laravel-port
         envFrom:
         - secretRef:
-            name: laravel-secrets
+            name: laravel-secrets    
+        volumeMounts:
+        - name: tmp-data
+          mountPath: /tmp
+      volumes:
+        - name: tmp-data
+          emptyDir: {}
       nodeSelector:
         beta.kubernetes.io/os: linux
+        
 ---
 apiVersion: v1
 kind: Service
