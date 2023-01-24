@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: db
+  template:
+    metadata:
+      labels:
+        name: db
+    spec:
+      volumes:
+      - name: db-data
+        emptyDir: {}
+      containers:
+      - name: db
+        image: mariadb:latest
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-data
+        env:
+        - name: MARIADB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: DB_DATABASE
+              optional: false
+        - name: MARIADB_USER
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: DB_USERNAME
+              optional: false
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: DB_PASSWORD
+              optional: false
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: DB_ROOT_PASSWORD
+              optional: false
+        - name: MARIADB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secrets
+              key: DB_PORT
+              optional: false
+        ports:
+        - containerPort: 3306
+          name: db-port
+      nodeSelector:
+        kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    name: db
+spec:
+  ports:
+  - port: 3306
+    name: db
+    targetPort: db-port
+  selector:
+    name: db
