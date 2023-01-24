@@ -17,22 +17,22 @@ spec:
       annotations:
         prometheus.io.scrape: "false"
     spec:
+      volumes:
+      - name: redis-data
+        emptyDir: {}
       containers:
       - name: redis
         image: redis:7-alpine
         command: ["redis-server"]
         args: ["--requirepass", "redis_password"]
+        volumeMounts:
+          - name: redis-data
+            mountPath: /data
         ports:
         - name: redis-port
-          containerPort: 6379    
-        volumeMounts:
-        - name: redis-data
-          mountPath: /data
-      volumes:
-        - name: redis-data
-          emptyDir: {}
+          containerPort: 6379
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service
