@@ -22,11 +22,15 @@ spec:
         image: redis:7-alpine
         command: ["redis-server"]
         args: ["--requirepass", "redis_password"]
-        volumes:
-          - redis-data:/data:rw
         ports:
         - name: redis-port
-          containerPort: 6379
+          containerPort: 6379    
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+        - name: redis-data
+          emptyDir: {}
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
