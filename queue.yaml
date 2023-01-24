@@ -2,30 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker
+  name: queue
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: worker
+      name: queue
   template:
     metadata:
       labels:
-        name: worker
+        name: queue
     spec:
       containers:
-      - name: worker
-        image: steveoliver/laravel-roadrunner:v0.0.8
+      - name: queue
+        image: steveoliver/laravel-roadrunner:v0.1.0
         command: ["php"]
         args: ["artisan", "horizon"]
         envFrom:
         - secretRef:
             name: laravel-secrets
-        volumeMounts:
-        - name: tmp-data
-          mountPath: /tmp
-      volumes:
-        - name: tmp-data
-          emptyDir: {}
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        kubernetes.io/os: linux
