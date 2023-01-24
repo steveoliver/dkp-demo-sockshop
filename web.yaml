@@ -18,17 +18,8 @@ spec:
         runAsGroup: 10001
         fsGroup: 10001
       volumes:
-        - name: config-volume
-          configMap:
-            name: roadrunner-config
-            items:
-              - key: .rr.yaml
-                path: .rr.yaml
         - name: app-logs
           emptyDir: {}
-        - name: app-code
-          persistentVolumeClaim:
-            claimName: laravel-pvc
       initContainers:
       - name: migrations
         image: steveoliver/laravel-roadrunner:v0.1.1
@@ -40,12 +31,8 @@ spec:
       - name: web
         image: steveoliver/laravel-roadrunner:v0.1.1
         command: ["rr"]
-        args: ["serve", "-c", "/etc/config/.rr.yaml"]
+        args: ["serve", "-c", ".rr.yaml"]
         volumeMounts:
-          - name: config-volume
-            mountPath: /etc/config
-          - name: app-code
-            mountPath: /app
           - name: app-logs
             mountPath: /app/storage/logs
         ports:
