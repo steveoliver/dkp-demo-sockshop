@@ -1,0 +1,102 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: web
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      volumes:
+        - name: config-volume
+          configMap:
+            name: roadrunner-config
+            items:
+              - key: .rr.yaml
+                path: .rr.yaml
+        - name: app-logs
+          emptyDir: {}
+        - name: app-code
+          persistentVolumeClaim:
+            claimName: laravel-pvc
+      initContainers:
+      - name: migrations
+        image: steveoliver/laravel-roadrunner:v0.1.1
+        command: ["php", "artisan", "migrate"]
+        envFrom:
+          - secretRef:
+              name: laravel-secrets
+      containers:
+      - name: web
+        image: steveoliver/laravel-roadrunner:v0.1.1
+        command: ["rr"]
+        args: ["serve", "-c", "/etc/config/.rr.yaml"]
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+          - name: app-code
+            mountPath: /app
+          - name: app-logs
+            mountPath: /app/storage/logs
+        ports:
+        - containerPort: 8080
+          name: web-port
+        - containerPort: 8081
+          name: metrics-port
+        envFrom:
+        - secretRef:
+            name: laravel-secrets
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+      - image: busybox
+        command: [ "/bin/sh" ]
+        args: ["-c", "touch /app/storage/logs/laravel.log && tail -f /app/storage/logs/laravel.log" ]
+        name: sidecar-container
+        resources: { }
+        volumeMounts:
+          - name: app-logs
+            mountPath: /app/storage/logs
+      nodeSelector:
+        kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    name: web
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    name: web-svc-port
+    targetPort: web-port
+  selector:
+    name: web
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-metrics
+  labels:
+    name: web-metrics
+spec:
+  ports:
+  - port: 8081
+    name: metrics-service-port
+    targetPort: metrics-port
+  selector:
+    name: web
